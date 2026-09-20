@@ -1,13 +1,51 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Dockerfile Deployment Test</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TaskBoard — Express</title>
+    <link rel="stylesheet" href="/style.css" />
   </head>
-  <body style="font-family:system-ui;max-width:720px;margin:5rem auto;padding:1rem">
-    <h1>Hello from deploy-test-dockerfile</h1>
-    <p>Your Dockerfile-based Nginx deployment is working.</p>
-    <p><a href="/health.html">Health check</a></p>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <h1><a href="/">TaskBoard</a></h1>
+        <p class="tagline">Express · SQLite · real persistence</p>
+        <div id="build-marker" class="build-marker"></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="toolbar">
+        <input id="search" type="search" placeholder="Search tasks…" autocomplete="off" />
+        <select id="status-filter" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          <option value="todo">Todo</option>
+          <option value="in_progress">In progress</option>
+          <option value="done">Done</option>
+        </select>
+        <button id="new-project-btn" class="btn primary" type="button">+ New project</button>
+      </section>
+
+      <form id="new-project-form" class="card hidden" autocomplete="off">
+        <h2>New project</h2>
+        <label>Name <input id="project-name" required maxlength="200" /></label>
+        <label>Description <textarea id="project-description" maxlength="1000"></textarea></label>
+        <div class="row">
+          <button class="btn primary" type="submit">Create</button>
+          <button class="btn" id="cancel-project" type="button">Cancel</button>
+        </div>
+      </form>
+
+      <section id="board" class="board" aria-live="polite"></section>
+      <p id="empty" class="empty hidden">No projects yet — create one to get started.</p>
+    </main>
+
+    <footer class="footer">
+      <span id="footer-marker"></span>
+      <span>Demo data is stored in SQLite. Mutations are not authenticated — public demo only.</span>
+    </footer>
+
+    <script type="module" src="/app.js"></script>
   </body>
 </html>
