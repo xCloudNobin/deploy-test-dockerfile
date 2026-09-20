@@ -81,13 +81,11 @@ Smoke assertions (all `PASS`):
 - **Configurable PORT / DATABASE_PATH:** container with `-e PORT=8081 -e DATABASE_PATH=/data/custom.sqlite`
   serves `/ready` on the overridden port and creates `/data/custom.sqlite`.
 
-### 5. Manual container round trip
+### 5. Production container lifecycle
 
-```
-$ docker volume create taskboard-data
-$ docker run -d --name tb -p 127.0.0.1:PORT:8080 -v taskboard-data:/data deploy-test-dockerfile
-# /health, /ready, CRUD via curl observed; container replaced with same volume keeps data
-```
+The container build/run/replace lifecycle is exercised end-to-end by the automated Docker smoke
+(section 4): build → run on `127.0.0.1:<port>` with a `/data` volume → CRUD → `docker rm -f` →
+replace with the same volume → data verified present. No separate interactive run was required.
 
 ## Schema / persistence notes
 
